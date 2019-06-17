@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import { hot } from 'react-hot-loader/root';
 
-import App from '../components/screen/Root/App';
+import RootScreen from '../components/screen/Root';
 
 const NotFound = (props: RouteComponentProps) => {
   return <div>404 Not Found</div>;
@@ -17,7 +17,7 @@ const AppRouter = (props: {}) => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path='/' component={App} />
+        <Route exact path='/' component={RootScreen} />
         <Route render={NotFound} />
       </Switch>
     </BrowserRouter>
