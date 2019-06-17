@@ -5,6 +5,7 @@ import {
   Route,
   RouteComponentProps
 } from 'react-router-dom';
+import { hot } from 'react-hot-loader/root';
 
 import App from '../components/screen/Root/App';
 
@@ -23,4 +24,4 @@ const AppRouter = (props: {}) => {
   );
 };
 
-export default AppRouter;
+export default hot(AppRouter);

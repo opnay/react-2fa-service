@@ -25,6 +25,7 @@ module.exports = (env, opt) =>
         modules: ['node_modules'],
         extensions: ['.tsx', '.ts', '.js', 'jsx', '.json', '.css'],
         alias: {
+          'react-dom': '@hot-loader/react-dom',
           ASSETS: _('src/asset')
         }
       },
@@ -32,12 +33,14 @@ module.exports = (env, opt) =>
         rules: [
           {
             test: /\.tsx?$/,
-            use: {
-              loader: 'ts-loader',
-              options: {
-                transpileOnly: true
+            use: [
+              {
+                loader: 'ts-loader',
+                options: {
+                  transpileOnly: true
+                }
               }
-            }
+            ]
           },
           {
             test: /\.css$/,
