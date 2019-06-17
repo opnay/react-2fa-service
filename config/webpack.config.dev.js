@@ -8,6 +8,9 @@ module.exports = {
     openPage: '',
     hot: true,
     quiet: true,
-    stats: 'errors-only'
+    stats: 'errors-only',
+
+    // React Router
+    historyApiFallback: true
   }
 };
