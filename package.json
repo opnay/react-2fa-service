@@ -15,7 +15,7 @@
     "typescript": "3.5.2"
   },
   "scripts": {
-    "start": "webpack-dev-server --mode development --config config/webpack.config.js --progress --color",
+    "start": "webpack-dev-server --mode development --config config/webpack.config.dev.js --progress --color",
     "build": "webpack --mode production --config config/webpack.config.js --progress --color",
     "eject": "react-scripts eject"
   },

@@ -1,4 +1,6 @@
-module.exports = {
+const config = require('./webpack.config');
+
+module.exports = config({
   mode: 'development',
   devtool: 'source-map',
   devServer: {
@@ -13,4 +15,4 @@ module.exports = {
     // React Router
     historyApiFallback: true
   }
-};
+});
