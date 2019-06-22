@@ -10,13 +10,13 @@
     "@types/react-router-dom": "^4.3.4",
     "firebase": "^6.2.2",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react-dom": "npm:@hot-loader/react-dom",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "typescript": "3.5.2"
   },
   "scripts": {
-    "start": "webpack-dev-server --hot --mode development --config config/webpack.config.dev.js --progress --color",
+    "start": "webpack-dev-server --mode development --config config/webpack.config.dev.js --progress --color",
     "build": "webpack --mode production --config config/webpack.config.prod.js --progress --color",
     "eject": "react-scripts eject"
   },

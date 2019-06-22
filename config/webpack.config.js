@@ -26,7 +26,6 @@ module.exports = function(opt) {
       modules: ['node_modules'],
       extensions: ['.tsx', '.ts', '.js', 'jsx', '.json', '.css'],
       alias: {
-        'react-dom': '@hot-loader/react-dom',
         ASSETS: _('src/asset')
       }
     },
