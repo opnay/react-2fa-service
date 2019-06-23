@@ -6,6 +6,7 @@ const _ = relPath => path.resolve(projectDir, relPath);
 const port = process.env.PORT || 3000;
 const publicUrl = '';
 
+const Webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
@@ -91,7 +92,8 @@ module.exports = function(opt) {
       }),
       new InterpolateHtmlPlugin(HtmlWebpackPlugin, {
         PUBLIC_URL: publicUrl
-      })
+      }),
+      new Webpack.DefinePlugin({ 'process.env.FIREBASE': process.env.FIREBASE })
     ]
   };
 };

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import AppRouter from './router';
+import { FirebaseProvider } from './context/FirebaseContext';
 
 type ProviderProps = {
   contexts: Array<React.ComponentType<any>>;
@@ -24,7 +25,7 @@ const ProviderComponent: React.FC<ProviderProps> = (props: ProviderProps) => {
   return <Fragment>{rendered}</Fragment>;
 };
 
-const ContextProviders: Array<React.ComponentType> = [];
+const ContextProviders: Array<React.ComponentType> = [FirebaseProvider];
 
 ReactDOM.render(
   <ProviderComponent contexts={ContextProviders}>
