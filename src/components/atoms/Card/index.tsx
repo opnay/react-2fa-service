@@ -10,7 +10,11 @@ const Card = (props: CardProps) => {
   const { children, className } = props;
   const cn = React.useMemo(() => ['card', className].join(' '), [className]);
 
-  return <div className={cn}>{children}</div>;
+  return (
+    <div {...props} className={cn}>
+      {children}
+    </div>
+  );
 };
 
 export default Card;
