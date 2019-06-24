@@ -29,3 +29,5 @@ export class LocalStorageManager {
     }
   }
 }
+
+export const tokenListStorage = new LocalStorageManager('tk-list');
