@@ -4,8 +4,13 @@ import React from 'react';
 import Card from '../../atoms/Card';
 import { FirebaseContext } from '../../../context/FirebaseContext';
 import firebase from 'firebase';
+import { withRouter, RouteComponentProps } from 'react-router';
+import { APP_PATH } from '../../../router/path';
 
-const RootScreen = () => {
+type Props = RouteComponentProps;
+
+const RootScreen = (props: Props) => {
+  const { history } = props;
   const FirebaseApp = React.useContext(FirebaseContext);
 
   // Get Google Auth Provider
@@ -25,6 +30,7 @@ const RootScreen = () => {
 
         const token: firebase.auth.OAuthCredential = val.credential;
         console.log(token);
+        history.push(APP_PATH.MAIN);
       })
       .catch(err => {
         console.error(err);
@@ -42,4 +48,4 @@ const RootScreen = () => {
   );
 };
 
-export default RootScreen;
+export default withRouter(RootScreen);
