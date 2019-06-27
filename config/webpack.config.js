@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const projectDir = fs.realpathSync(process.cwd());
-const _ = relPath => path.resolve(projectDir, relPath);
+const _ = (relPath) => path.resolve(projectDir, relPath);
 
 const port = process.env.PORT || 3000;
 const publicUrl = '';
@@ -25,10 +25,7 @@ module.exports = function(opt) {
     },
     resolve: {
       modules: ['node_modules'],
-      extensions: ['.tsx', '.ts', '.js', 'jsx', '.json', '.css'],
-      alias: {
-        ASSETS: _('src/asset')
-      }
+      extensions: ['.tsx', '.ts', '.js', 'jsx', '.json', '.css']
     },
     module: {
       rules: [
@@ -61,12 +58,6 @@ module.exports = function(opt) {
           test: /\.svg$/,
           use: {
             loader: 'svg-url-loader?encoding=base64'
-          }
-        },
-        {
-          test: /\.json$/,
-          use: {
-            loader: 'url-loader'
           }
         },
         {
