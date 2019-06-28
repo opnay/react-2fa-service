@@ -1,9 +1,11 @@
 import './styles.css';
 
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+
 import React from 'react';
 import Card from '../../atoms/Card';
 import { FirebaseContext } from '../../../context/FirebaseContext';
-import firebase from 'firebase';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { APP_PATH } from '../../../router/path';
 
@@ -32,7 +34,7 @@ const RootScreen = (props: Props) => {
         console.log(token);
         history.push(APP_PATH.MAIN);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
   }, [FirebaseApp]);

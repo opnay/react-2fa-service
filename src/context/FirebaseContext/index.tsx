@@ -1,4 +1,5 @@
-import Firebase from 'firebase';
+import * as Firebase from 'firebase/app';
+
 import React, { Fragment } from 'react';
 
 // Config
