@@ -1,12 +1,12 @@
 import './styles.css';
 
-import React, { SyntheticEvent } from 'react';
+import React from 'react';
 import Card from '../../atoms/Card';
 import { tokenListStorage } from '../../../utils/browser-support/LocalStorageManager';
 import TokenItem from './components/TokenItem';
-import { Input } from '../../atoms/Styled';
+import TokenForm from './components/TokenForm';
 
-const Main: React.FC = (props) => {
+const Main: React.FC = () => {
   // Token
   const [token, setTokenString] = React.useState(tokenListStorage.value);
   const setToken = React.useCallback(
@@ -21,34 +21,19 @@ const Main: React.FC = (props) => {
     [token]
   );
 
-  // Input ref
-  const [inputRef, setInputRef] = React.useState<HTMLInputElement | undefined>(
-    undefined
-  );
-
   // Callback
-  const onChange = React.useCallback(
-    (e: SyntheticEvent<HTMLInputElement>) => {
-      setInputRef(e.currentTarget);
+  const onSubmit = React.useCallback(
+    (val: string) => {
+      if (val) {
+        const arr = [...arrToken, val];
+        setToken(JSON.stringify(arr));
+      }
     },
-    [setInputRef]
+    [token, arrToken]
   );
-  const onSubmit = React.useCallback(() => {
-    if (!!inputRef && inputRef.value) {
-      const arr = [...arrToken, inputRef.value];
-      setToken(JSON.stringify(arr));
-    }
-
-    if (inputRef) {
-      inputRef.value = '';
-    }
-  }, [!!inputRef, (inputRef || { value: '' }).value, token, arrToken]);
   const onReset = React.useCallback(() => {
     setToken('');
-    if (inputRef) {
-      inputRef.value = '';
-    }
-  }, [!!inputRef, (inputRef || { value: '' }).value]);
+  }, [setToken]);
 
   // Render
   const renderTokens = arrToken.map((it, idx) => (
@@ -60,8 +45,7 @@ const Main: React.FC = (props) => {
       <Card>
         <h1>Token List</h1>
         <div className='bottom-line'>{renderTokens}</div>
-        <Input onChange={onChange} />
-        <button onClick={onSubmit}>확인</button>
+        <TokenForm onSubmit={onSubmit} />
         <button onClick={onReset}>리셋</button>
       </Card>
     </div>
