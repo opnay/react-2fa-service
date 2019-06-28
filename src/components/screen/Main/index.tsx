@@ -7,46 +7,53 @@ import TokenInput from './components/TokenInput';
 import TokenItem from './components/TokenItem';
 
 const Main: React.FC = (props) => {
-  const arrToken = JSON.parse(tokenListStorage.value || '[]') as Array<string>;
-  const [input, setInput] = React.useState('');
+  // Token
+  const [token, setTokenString] = React.useState(tokenListStorage.value);
+  const setToken = React.useCallback(
+    (val: string) => {
+      setTokenString(val);
+      tokenListStorage.value = val;
+    },
+    [token, setTokenString]
+  );
+  const arrToken: Array<string> = React.useMemo(
+    () => JSON.parse(token || '[]'),
+    [token]
+  );
+
+  // Input ref
   const [inputRef, setInputRef] = React.useState<HTMLInputElement | undefined>(
     undefined
   );
-  const [tokens, setToken] = React.useState([] as Array<string>);
-
-  React.useEffect(() => {
-    setToken(arrToken);
-  }, [...arrToken]);
 
   // Callback
   const onChange = React.useCallback(
     (e: SyntheticEvent<HTMLInputElement>) => {
       setInputRef(e.currentTarget);
-      setInput(e.currentTarget.value);
     },
-    [setInput, setInputRef]
+    [setInputRef]
   );
   const onSubmit = React.useCallback(() => {
-    if (input) {
-      const arr = [...tokens, input];
-      tokenListStorage.value = JSON.stringify(arr);
+    if (!!inputRef && inputRef.value) {
+      const arr = [...arrToken, inputRef.value];
+      setToken(JSON.stringify(arr));
     }
 
     if (inputRef) {
       inputRef.value = '';
     }
-  }, [tokens, input, inputRef]);
+  }, [!!inputRef, (inputRef || { value: '' }).value, token, arrToken]);
   const onReset = React.useCallback(() => {
-    tokenListStorage.value = '[]';
+    setToken('');
     if (inputRef) {
       inputRef.value = '';
     }
-  }, [inputRef]);
+  }, [!!inputRef, (inputRef || { value: '' }).value]);
 
   // Render
-  const renderTokens = React.useMemo(() => {
-    return arrToken.map((it, idx) => <TokenItem key={'item-idx'} token={it} />);
-  }, [...arrToken]);
+  const renderTokens = arrToken.map((it, idx) => (
+    <TokenItem key={'item-idx' + idx} token={it} />
+  ));
 
   return (
     <div className='main'>
