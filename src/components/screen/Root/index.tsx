@@ -8,6 +8,7 @@ import Card from '../../atoms/Card';
 import { FirebaseContext } from '../../../context/FirebaseContext';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { APP_PATH } from '../../../router/path';
+import { Button } from '../../atoms/Styled';
 
 type Props = RouteComponentProps;
 
@@ -42,9 +43,9 @@ const RootScreen = (props: Props) => {
   return (
     <div className='main'>
       <Card className='login'>
-        <button className='button' onClick={onClickGoogle}>
+        <Button className='button' onClick={onClickGoogle}>
           Google SignIn
-        </button>
+        </Button>
       </Card>
     </div>
   );
