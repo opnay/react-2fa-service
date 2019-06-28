@@ -3,8 +3,8 @@ import './styles.css';
 import React, { SyntheticEvent } from 'react';
 import Card from '../../atoms/Card';
 import { tokenListStorage } from '../../../utils/browser-support/LocalStorageManager';
-import TokenInput from './components/TokenInput';
 import TokenItem from './components/TokenItem';
+import { Input } from '../../atoms/Styled';
 
 const Main: React.FC = (props) => {
   // Token
@@ -60,7 +60,7 @@ const Main: React.FC = (props) => {
       <Card>
         <h1>Token List</h1>
         <div className='bottom-line'>{renderTokens}</div>
-        <TokenInput onChange={onChange} />
+        <Input onChange={onChange} />
         <button onClick={onSubmit}>확인</button>
         <button onClick={onReset}>리셋</button>
       </Card>

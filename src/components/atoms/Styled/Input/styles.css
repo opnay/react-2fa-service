@@ -1,4 +1,4 @@
-.token-input {
+.input {
   background: transparent;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
@@ -9,8 +9,8 @@
   transition: background-color 0.2s ease-in-out, border 0.2s ease-in-out;
 }
 
-.token-input:focus,
-.token-input:active {
+.input:focus,
+.input:active {
   background: rgba(12, 12, 32, 0.025);
   border-bottom: 2px solid var(--color-primary);
 }
