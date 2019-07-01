@@ -1,4 +1,6 @@
 import * as Firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 
 import React, { Fragment } from 'react';
 

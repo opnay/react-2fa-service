@@ -1,7 +1,6 @@
 import './styles.css';
 
 import * as firebase from 'firebase/app';
-import 'firebase/auth';
 
 import React from 'react';
 import Card from '../../atoms/Card';
