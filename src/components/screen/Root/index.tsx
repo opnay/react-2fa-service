@@ -31,7 +31,6 @@ const RootScreen = (props: Props) => {
         }
 
         const token: firebase.auth.OAuthCredential = val.credential;
-        console.log(token);
         history.push(APP_PATH.MAIN);
       })
       .catch((err) => {
