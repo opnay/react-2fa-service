@@ -2,42 +2,81 @@ import './styles.css';
 
 import React from 'react';
 import Card from '../../atoms/Card';
-import { tokenListStorage } from '../../../utils/browser-support/LocalStorageManager';
 import TokenItem from './components/TokenItem';
 import TokenForm from './components/TokenForm';
+import { FirebaseContext } from '../../../context/FirebaseContext';
+
+type TokenObject = { [x: string]: string };
 
 const Main: React.FC = () => {
+  const Firebase = React.useContext(FirebaseContext);
   // Token
-  const [token, setTokenString] = React.useState(tokenListStorage.value);
-  const setToken = React.useCallback(
-    (val: string) => {
-      setTokenString(val);
-      tokenListStorage.value = val;
-    },
-    [token, setTokenString]
-  );
-  const arrToken: Array<string> = React.useMemo(
-    () => JSON.parse(token || '[]'),
-    [token]
-  );
+  const [tokenObj, setTokenObj] = React.useState<TokenObject>({});
+  const doc = React.useMemo(() => {
+    return Firebase.firestore()
+      .collection('totp-secrets')
+      .doc(Firebase.auth().currentUser!.uid);
+  }, [Firebase]);
 
   // Callback
-  const onSubmit = React.useCallback(
-    (val: string) => {
-      if (val) {
-        const arr = [...arrToken, val];
-        setToken(JSON.stringify(arr));
+  const loadTokenObj = React.useCallback(() => {
+    return doc.get().then((val) => {
+      const data = val.data();
+      if (data) {
+        setTokenObj(data);
       }
+    });
+  }, [doc, setTokenObj]);
+
+  React.useEffect(() => {
+    loadTokenObj();
+  }, []);
+
+  const onSubmit = React.useCallback(
+    (name: string, secret: string) => {
+      if (!name || !secret) {
+        throw new Error('Invalid argument');
+      }
+
+      if (!!tokenObj[name]) {
+        throw new Error('Duplicated');
+      }
+
+      // Create document data
+      const data: { [x: string]: string } = {};
+      data[name] = secret;
+
+      // Double check data
+      if (!data[name] || data[name] !== secret) {
+        throw new Error('Build data failed');
+      }
+
+      return doc
+        .set(data, { merge: true })
+        .then(() => {
+          // Call new Doc from firestore server
+          return loadTokenObj();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
-    [token, arrToken]
+    [doc, setTokenObj]
   );
   const onReset = React.useCallback(() => {
-    setToken('');
-  }, [setToken]);
+    doc
+      .delete()
+      .then(() => {
+        return loadTokenObj();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [doc]);
 
   // Render
-  const renderTokens = arrToken.map((it, idx) => (
-    <TokenItem key={'item-idx' + idx} token={it} />
+  const renderTokens = Object.keys(tokenObj).map((key) => (
+    <TokenItem key={'item-' + key} token={[key, tokenObj[key]]} />
   ));
 
   return (

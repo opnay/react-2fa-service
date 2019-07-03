@@ -2,11 +2,12 @@ import React from 'react';
 import Node2FA from 'node-2fa';
 
 type Props = {
-  token: string;
+  token: [string, string];
 };
 
 const TokenItem = (props: Props) => {
   const { token } = props;
+  const [name, tokenSecret] = token;
 
   // State of time
   const [time, setTime] = React.useState(new Date().getSeconds());
@@ -14,8 +15,8 @@ const TokenItem = (props: Props) => {
 
   // Calculate TOTP
   const hash = React.useMemo(() => {
-    return Node2FA.generateToken(token);
-  }, [token, tick]);
+    return Node2FA.generateToken(tokenSecret);
+  }, [tokenSecret, tick]);
 
   // Check time for each 30s
   const updateTime = React.useCallback(() => {
@@ -23,18 +24,19 @@ const TokenItem = (props: Props) => {
     if (time === 0 || time === 30) {
       setTick(!tick);
     }
-    setTime(time);
+    setTime(time >= 30 ? time - 30 : time);
   }, [time, setTime, tick, setTick]);
 
   // setTime
   React.useEffect(() => {
     const curDate = new Date();
-    setTimeout(updateTime, 1000 - (curDate.getTime() % 1000));
+    const timeout = setTimeout(updateTime, 1000 - (curDate.getTime() % 1000));
+    return () => clearInterval(timeout);
   }, [time, updateTime]);
 
   return (
     <div>
-      <div>{token}</div>
+      <div>{name}</div>
       <div>{hash.token}</div>
       <div>{time}</div>
     </div>
