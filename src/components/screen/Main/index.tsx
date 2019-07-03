@@ -63,16 +63,6 @@ const Main: React.FC = () => {
     },
     [doc, setTokenObj]
   );
-  const onReset = React.useCallback(() => {
-    doc
-      .delete()
-      .then(() => {
-        return loadTokenObj();
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, [doc]);
 
   // Render
   const renderTokens = Object.keys(tokenObj).map((key) => (
@@ -85,7 +75,6 @@ const Main: React.FC = () => {
         <h1>Token List</h1>
         <div className='bottom-line'>{renderTokens}</div>
         <TokenForm onSubmit={onSubmit} />
-        <button onClick={onReset}>리셋</button>
       </Card>
     </div>
   );
