@@ -1,9 +1,9 @@
 import './styles.css';
+import Lock from '../../../assets/icons/Lock.svg';
 
 import * as firebase from 'firebase/app';
 
 import React from 'react';
-import Card from '../../atoms/Card';
 import { FirebaseContext } from '../../../context/FirebaseContext';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { APP_PATH } from '../../../router/path';
@@ -39,12 +39,16 @@ const RootScreen = (props: Props) => {
   }, [FirebaseApp]);
 
   return (
-    <div className='main'>
-      <Card className='login'>
+    <div className='root'>
+      <div className='background'>
+        <img src={Lock} alt='Lock' />
+      </div>
+      <div className='content'>
+        <h1>로그인</h1>
         <Button className='button' onClick={onClickGoogle}>
           Google SignIn
         </Button>
-      </Card>
+      </div>
     </div>
   );
 };
