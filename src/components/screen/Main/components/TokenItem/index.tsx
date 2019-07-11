@@ -1,5 +1,9 @@
+import './styles.css';
+import IconDelete from '../../../../../assets/icons/Delete.svg';
+
 import React from 'react';
 import Node2FA from 'node-2fa';
+import { Button } from '../../../../atoms/Styled';
 
 type Props = {
   token: [string, string];
@@ -14,8 +18,14 @@ const TokenItem = (props: Props) => {
   const [tick, setTick] = React.useState(true);
 
   // Calculate TOTP
-  const hash = React.useMemo(() => {
-    return Node2FA.generateToken(tokenSecret);
+  const genToken = React.useMemo(() => {
+    const { token } = Node2FA.generateToken(tokenSecret);
+
+    if (!token) {
+      return '';
+    }
+
+    return `${token.slice(0, 3)} ${token.slice(3, 6)}`;
   }, [tokenSecret, tick]);
 
   // Check time for each 30s
@@ -35,10 +45,14 @@ const TokenItem = (props: Props) => {
   }, [time, updateTime]);
 
   return (
-    <div>
-      <div>{name}</div>
-      <div>{hash.token}</div>
-      <div>{time}</div>
+    <div className='token-item'>
+      <div className='title'>{name}</div>
+      {/* TODO: Update name */}
+      <div className='name'>aaaa@example.com</div>
+      <div className='token'>{genToken}</div>
+      <Button>
+        <img src={IconDelete} alt='delete' />
+      </Button>
     </div>
   );
 };
