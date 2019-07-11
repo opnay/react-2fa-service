@@ -1,7 +1,6 @@
 import './styles.css';
 
 import React from 'react';
-import Card from '../../atoms/Card';
 import TokenItem from './components/TokenItem';
 import TokenForm from './components/TokenForm';
 import { FirebaseContext } from '../../../context/FirebaseContext';
@@ -70,12 +69,9 @@ const Main: React.FC = () => {
   ));
 
   return (
-    <div className='main'>
-      <Card>
-        <h1>Token List</h1>
-        <div className='bottom-line'>{renderTokens}</div>
-        <TokenForm onSubmit={onSubmit} />
-      </Card>
+    <div className='content'>
+      <div className='bottom-line'>{renderTokens}</div>
+      <TokenForm onSubmit={onSubmit} />
     </div>
   );
 };
