@@ -10,8 +10,9 @@ import Modal from '../../atoms/Modal';
 import { useToggle } from '../../../utils/react-support/Hook';
 import Card from '../../atoms/Card';
 import UserInfo from './components/UserInfo';
+import { TokenType } from '../../../types/2fa-service/secret-token';
 
-type TokenObject = { [x: string]: string };
+type TokenObject = Array<TokenType>;
 
 const Main: React.FC = () => {
   const Firebase = React.useContext(FirebaseContext);
@@ -21,35 +22,30 @@ const Main: React.FC = () => {
   ]);
 
   // Token
-  const [tokenObj, setTokenObj] = React.useState<TokenObject>({});
-  const doc = React.useMemo(() => {
-    return Firebase.firestore()
-      .collection('totp-secrets')
-      .doc(Firebase.auth().currentUser!.uid);
-  }, [Firebase]);
+  const [tokens, setTokens] = React.useState<TokenObject>([]);
+  const collection = React.useMemo(
+    () =>
+      Firebase.firestore()
+        .collection('2fa-service')
+        .doc(Firebase.auth().currentUser!.uid)
+        .collection('secrets'),
+    [Firebase]
+  );
+  const loadTokens = React.useCallback(() => {
+    collection.get().then((snapshot) => {
+      const data: TokenObject = snapshot.docs.map(
+        (it) => it.data() as TokenType
+      );
+      setTokens(data);
+    });
+  }, [collection]);
+  React.useEffect(() => loadTokens(), []);
 
   // Callback
-  const loadTokenObj = React.useCallback(() => {
-    return doc.get().then((val) => {
-      const data = val.data();
-      if (data) {
-        setTokenObj(data);
-      }
-    });
-  }, [doc, setTokenObj]);
-
-  React.useEffect(() => {
-    loadTokenObj();
-  }, []);
-
   const onSubmit = React.useCallback(
     (name: string, secret: string) => {
       if (!name || !secret) {
         throw new Error('Invalid argument');
-      }
-
-      if (!!tokenObj[name]) {
-        throw new Error('Duplicated');
       }
 
       // Create document data
@@ -61,23 +57,28 @@ const Main: React.FC = () => {
         throw new Error('Build data failed');
       }
 
-      return doc
+      return collection
+        .doc(`${name}_a`)
         .set(data, { merge: true })
         .then(() => {
           // Call new Doc from firestore server
-          return loadTokenObj();
+          return loadTokens();
         })
         .catch((err) => {
           console.error(err);
         });
     },
-    [doc, setTokenObj]
+    [collection, loadTokens]
   );
 
   // Render
-  const renderTokens = Object.keys(tokenObj).map((key) => (
-    <TokenItem key={'item-' + key} token={[key, tokenObj[key]]} />
-  ));
+  const renderTokens = React.useMemo(
+    () =>
+      tokens.map((it: TokenType) => (
+        <TokenItem key={'item-' + it.service} {...it} />
+      )),
+    [tokens]
+  );
 
   return (
     <Fragment>
