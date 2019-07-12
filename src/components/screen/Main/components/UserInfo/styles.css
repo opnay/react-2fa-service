@@ -1,0 +1,24 @@
+.user-info {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.84);
+  height: 120px;
+  box-sizing: border-box;
+}
+
+.user-info .profile {
+  display: inline-block;
+  margin: 0 16px 0 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.user-info .name {
+  display: inline-block;
+
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 24px;
+  vertical-align: middle;
+}
