@@ -43,22 +43,15 @@ const Main: React.FC = () => {
 
   // Callback
   const onSubmit = React.useCallback(
-    (name: string, secret: string) => {
-      if (!name || !secret) {
+    (service: string, name: string, secret: string) => {
+      if (!service || !name || !secret) {
         throw new Error('Invalid argument');
       }
 
       // Create document data
-      const data: { [x: string]: string } = {};
-      data[name] = secret;
-
-      // Double check data
-      if (!data[name] || data[name] !== secret) {
-        throw new Error('Build data failed');
-      }
-
+      const data: TokenType = { name, service, secret };
       return collection
-        .doc(`${name}_a`)
+        .doc(`${service}_${name.split('@')[0]}`)
         .set(data, { merge: true })
         .then(() => {
           // Call new Doc from firestore server
