@@ -16,7 +16,7 @@ type TokenObject = { [x: string]: string };
 const Main: React.FC = () => {
   const Firebase = React.useContext(FirebaseContext);
   const [visible, toggleVisisble] = useToggle();
-  const onClickPlus = React.useCallback(() => toggleVisisble(), [
+  const onClickVisible = React.useCallback(() => toggleVisisble(), [
     toggleVisisble
   ]);
 
@@ -85,12 +85,12 @@ const Main: React.FC = () => {
         <UserInfo />
         <div className='list-content'>{renderTokens}</div>
       </div>
-      <Button className='add-token' onClick={onClickPlus}>
+      <Button className='add-token' onClick={onClickVisible}>
         <img src={IconPlusCircle} alt='plus circle' />
       </Button>
       <Modal visible={visible}>
         <Card className='input-form'>
-          <TokenForm onSubmit={onSubmit} />
+          <TokenForm onCancel={onClickVisible} onSubmit={onSubmit} />
         </Card>
       </Modal>
     </Fragment>

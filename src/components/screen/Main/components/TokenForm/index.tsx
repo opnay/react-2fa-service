@@ -4,6 +4,7 @@ import React from 'react';
 import { Input, Button } from '../../../../atoms/Styled';
 
 type Props = {
+  onCancel: () => void;
   onSubmit: (name: string, secret: string) => void;
 };
 
@@ -16,6 +17,8 @@ const TokenForm = (props: Props) => {
   >;
 
   const onReset = React.useCallback(() => {
+    const { onCancel } = props;
+
     if (inputName.current) {
       inputName.current.value = '';
     }
@@ -23,6 +26,8 @@ const TokenForm = (props: Props) => {
     if (inputSecret.current) {
       inputSecret.current.value = '';
     }
+
+    onCancel();
   }, [inputName, inputSecret]);
 
   const onSubmit = React.useCallback(() => {
