@@ -6,7 +6,7 @@ export function useToggle(defaultState: boolean = false): HookToggle {
   const [state, setState] = useState(defaultState);
   const setToggle = useCallback(
     (toggleState: boolean = !state) => setState(toggleState),
-    [setState]
+    [state, setState]
   );
   return [state, setToggle];
 }
