@@ -5,14 +5,13 @@ import React, { Fragment } from 'react';
 import TokenItem from './components/TokenItem';
 import TokenForm from './components/TokenForm';
 import { Button } from '../../atoms/Styled';
-import Modal from '../../atoms/Modal';
 import {
   useToggle,
   useFirestoreSecret
 } from '../../../utils/react-support/Hook';
-import Card from '../../atoms/Card';
 import UserInfo from './components/UserInfo';
 import { TokenType } from '../../../types/2fa-service/secret-token';
+import CardModal from '../../atoms/CardModal/CardModal';
 
 const Main: React.FC = () => {
   const [visible, toggleVisisble] = useToggle();
@@ -64,11 +63,9 @@ const Main: React.FC = () => {
       <Button className='add-token' onClick={onClickVisible}>
         <img src={IconPlusCircle} alt='plus circle' />
       </Button>
-      <Modal visible={visible}>
-        <Card className='input-form'>
-          <TokenForm onCancel={onClickVisible} onSubmit={onSubmit} />
-        </Card>
-      </Modal>
+      <CardModal visible={visible} className='input-form'>
+        <TokenForm onCancel={onClickVisible} onSubmit={onSubmit} />
+      </CardModal>
     </Fragment>
   );
 };
