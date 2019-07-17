@@ -6,47 +6,46 @@ import Node2FA from 'node-2fa';
 import { Button } from '../../../../atoms/Styled';
 import { TokenType } from '../../../../../types/2fa-service/secret-token';
 
+const INITIAL_TOKEN = 'XXX XXX';
+const TIME_OUT = 30000; // 30s
+
 type Props = TokenType;
 
 const TokenItem = (props: Props) => {
   const { name, service, secret } = props;
 
-  // State of time
-  const [time, setTime] = React.useState(new Date().getSeconds());
-  const [tick, setTick] = React.useState(true);
+  const [token, _setToken] = React.useState(INITIAL_TOKEN);
+  // setToken to make format as 'xxx xxx'
+  const setToken = React.useCallback(
+    (t: string) => {
+      if (t.length !== 6) {
+        _setToken('Invalid');
+      }
 
-  // Calculate TOTP
-  const genToken = React.useMemo(() => {
-    const { token } = Node2FA.generateToken(secret);
+      _setToken(`${t.slice(0, 3)} ${t.slice(3, 6)}`);
+    },
+    [_setToken]
+  );
 
-    if (!token) {
-      return '';
-    }
+  // Infinite loop each TIME_OUT
+  const generateToken = React.useCallback(() => {
+    const result = Node2FA.generateToken(secret);
+    const genToken = result.token || '';
 
-    return `${token.slice(0, 3)} ${token.slice(3, 6)}`;
-  }, [secret, tick]);
+    setToken(genToken);
 
-  // Check time for each 30s
-  const updateTime = React.useCallback(() => {
-    const time = new Date().getSeconds();
-    if (time === 0 || time === 30) {
-      setTick(!tick);
-    }
-    setTime(time >= 30 ? time - 30 : time);
-  }, [time, setTime, tick, setTick]);
-
-  // setTime
-  React.useEffect(() => {
     const curDate = new Date();
-    const timeout = setTimeout(updateTime, 1000 - (curDate.getTime() % 1000));
-    return () => clearInterval(timeout);
-  }, [time, updateTime]);
+    setTimeout(generateToken, TIME_OUT - (curDate.getTime() % TIME_OUT));
+  }, [secret, setToken]);
+
+  // start infinite loop
+  React.useEffect(() => generateToken(), []);
 
   return (
     <div className='token-item'>
       <div className='title'>{service}</div>
       <div className='name'>{name}</div>
-      <div className='token'>{genToken}</div>
+      <div className='token'>{token}</div>
       <Button>
         <img src={IconDelete} alt='delete' />
       </Button>
