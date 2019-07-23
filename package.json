@@ -8,7 +8,7 @@
     "@types/react": "16.8.23",
     "@types/react-dom": "16.8.4",
     "@types/react-router-dom": "^4.3.4",
-    "firebase": "^6.3.0",
+    "firebase": "^6.3.1",
     "node-2fa": "^1.1.2",
     "react": "^16.8.6",
     "react-dom": "npm:@hot-loader/react-dom",
