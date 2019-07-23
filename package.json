@@ -42,7 +42,7 @@
     "css-loader": "^3.0.0",
     "fork-ts-checker-webpack-plugin": "^1.4.2",
     "html-loader": "^0.5.5",
-    "html-webpack-plugin": "^4.0.0-beta.7",
+    "html-webpack-plugin": "^4.0.0-beta.8",
     "react-hot-loader": "^4.12.6",
     "style-loader": "^0.23.1",
     "svg-url-loader": "^3.0.0",
