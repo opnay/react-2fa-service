@@ -1,0 +1,50 @@
+.dialog {
+  width: 240px;
+}
+
+/**
+ *  Message
+ */
+.dialog .message {
+  margin: 24px 6px 12px;
+  color: rgba(0, 0, 0, 0.84);
+  font-size: 18px;
+  text-align: center;
+}
+
+/**
+ *  Buttons
+ */
+.dialog .button-group {
+  display: flex;
+  padding: 12px;
+}
+
+.dialog .button-group .button {
+  flex: 1;
+}
+
+/* Between spacing */
+.dialog .button-group .button ~ .button {
+  margin-left: 12px;
+}
+
+.dialog .button-group .button.negative {
+  background: transparent;
+  color: rgba(0, 0, 0, 0.84);
+}
+
+.dialog .button-group .button.negative:hover {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.dialog .button-group .button.positive {
+  background: var(--color-primary);
+}
+
+/**
+ *  Alert Dialog
+ */
+.dialog.alert .button.positive {
+  background: rgba(255, 12, 12, 0.75);
+}
