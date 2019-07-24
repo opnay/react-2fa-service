@@ -49,7 +49,7 @@ const Main: React.FC = () => {
   const renderTokens = React.useMemo(
     () =>
       tokens.map((it: TokenType) => (
-        <TokenItem key={'item-' + it.service} {...it} />
+        <TokenItem key={`${it.service}-${it.secret.slice(0, 8)}`} {...it} />
       )),
     [tokens]
   );
