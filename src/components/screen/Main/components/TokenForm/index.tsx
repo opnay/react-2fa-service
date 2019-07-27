@@ -19,7 +19,7 @@ const TokenForm = (props: Props) => {
     HTMLInputElement
   >;
 
-  const onReset = React.useCallback(() => {
+  const onCancel = React.useCallback(() => {
     const { onCancel } = props;
 
     if (inputServiceName.current) {
@@ -53,19 +53,24 @@ const TokenForm = (props: Props) => {
           inputSecret.current.value
         );
       }
-    })().then(onReset);
-  }, [inputName, inputSecret, onReset]);
+    })().then(onCancel);
+  }, [inputName, inputSecret, onCancel]);
 
   return (
     <div className={'token-form'}>
-      <Input ref={inputServiceName} placeholder='Service Name' />
-      <Input ref={inputName} placeholder='Service User Name' />
-      <Input ref={inputSecret} placeholder='Token' />
-      <div className={'section-button'}>
-        <Button className={'reset'} onClick={onReset}>
+      <h2 className={'header'}>추가</h2>
+      <div className={'input-group'}>
+        <Input ref={inputServiceName} placeholder='Service Name' />
+        <Input ref={inputName} placeholder='Service User Name' />
+        <Input ref={inputSecret} placeholder='Token' />
+      </div>
+      <div className={'button-group'}>
+        <Button className={'negative'} onClick={onCancel}>
           취소
         </Button>
-        <Button onClick={onSubmit}>확인</Button>
+        <Button className={'positive'} onClick={onSubmit}>
+          확인
+        </Button>
       </div>
     </div>
   );
