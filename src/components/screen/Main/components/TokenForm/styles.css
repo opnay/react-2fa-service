@@ -1,28 +1,44 @@
-.token-form {
+.token-form .header {
+  margin: 16px 24px 16px;
+  color: rgba(0, 0, 0, 0.84);
+}
+
+.token-form .input-group {
   display: flex;
   flex-direction: column;
-  margin: 0.5rem 0;
+  margin: 0 12px 12px;
 }
 
-.token-form .input {
+.token-form .input-group .input {
   flex: 1;
 }
 
-.token-form .section-button {
+/**
+ *  Buttons
+ */
+.token-form .button-group {
   display: flex;
-  flex-direction: row;
-  margin: 0.5rem 0 0;
+  margin: 0 12px 12px;
 }
 
-.token-form .button {
+.token-form .button-group .button {
   flex: 1;
 }
 
-.token-form .button ~ .button {
-  margin: 0 0 0 0.5rem;
+/* Between spacing */
+.token-form .button-group .button ~ .button {
+  margin-left: 12px;
 }
 
-.token-form .button.reset {
+.token-form .button-group .button.negative {
   background: transparent;
-  color: var(--color-primary);
+  color: rgba(0, 0, 0, 0.84);
+}
+
+.token-form .button-group .button.negative:hover {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.token-form .button-group .button.positive {
+  background: var(--color-primary);
 }

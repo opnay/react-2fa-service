@@ -1,82 +1,76 @@
 import './styles.css';
+import IconPlusCircle from '../../../assets/icons/PlusCircle.svg';
 
-import React from 'react';
-import Card from '../../atoms/Card';
+import React, { Fragment } from 'react';
 import TokenItem from './components/TokenItem';
 import TokenForm from './components/TokenForm';
-import { FirebaseContext } from '../../../context/FirebaseContext';
-
-type TokenObject = { [x: string]: string };
+import { Button } from '../../atoms/Styled';
+import {
+  useToggle,
+  useFirestoreSecret
+} from '../../../utils/react-support/Hook';
+import UserInfo from './components/UserInfo';
+import { TokenType } from '../../../types/2fa-service/secret-token';
+import CardModal from '../../atoms/CardModal/CardModal';
 
 const Main: React.FC = () => {
-  const Firebase = React.useContext(FirebaseContext);
+  const [visible, toggleVisisble] = useToggle();
+  const onClickVisible = React.useCallback(() => toggleVisisble(), [
+    toggleVisisble
+  ]);
+
   // Token
-  const [tokenObj, setTokenObj] = React.useState<TokenObject>({});
-  const doc = React.useMemo(() => {
-    return Firebase.firestore()
-      .collection('totp-secrets')
-      .doc(Firebase.auth().currentUser!.uid);
-  }, [Firebase]);
+  const [tokens, collection, loadTokens] = useFirestoreSecret();
 
   // Callback
-  const loadTokenObj = React.useCallback(() => {
-    return doc.get().then((val) => {
-      const data = val.data();
-      if (data) {
-        setTokenObj(data);
-      }
-    });
-  }, [doc, setTokenObj]);
-
-  React.useEffect(() => {
-    loadTokenObj();
-  }, []);
-
   const onSubmit = React.useCallback(
-    (name: string, secret: string) => {
-      if (!name || !secret) {
+    (service: string, name: string, secret: string) => {
+      if (!service || !name || !secret) {
         throw new Error('Invalid argument');
       }
 
-      if (!!tokenObj[name]) {
-        throw new Error('Duplicated');
-      }
-
       // Create document data
-      const data: { [x: string]: string } = {};
-      data[name] = secret;
-
-      // Double check data
-      if (!data[name] || data[name] !== secret) {
-        throw new Error('Build data failed');
-      }
-
-      return doc
+      const data: TokenType = { name, service, secret };
+      return collection
+        .doc(`${service}_${name.split('@')[0]}`)
         .set(data, { merge: true })
         .then(() => {
           // Call new Doc from firestore server
-          return loadTokenObj();
+          return loadTokens();
         })
         .catch((err) => {
           console.error(err);
         });
     },
-    [doc, setTokenObj]
+    [collection, loadTokens]
   );
 
   // Render
-  const renderTokens = Object.keys(tokenObj).map((key) => (
-    <TokenItem key={'item-' + key} token={[key, tokenObj[key]]} />
-  ));
+  const renderTokens = React.useMemo(
+    () =>
+      tokens.map((it: TokenType) => (
+        <TokenItem
+          key={`${it.service}-${it.secret.slice(0, 8)}`}
+          loadSecrets={loadTokens}
+          {...it}
+        />
+      )),
+    [tokens]
+  );
 
   return (
-    <div className='main'>
-      <Card>
-        <h1>Token List</h1>
-        <div className='bottom-line'>{renderTokens}</div>
-        <TokenForm onSubmit={onSubmit} />
-      </Card>
-    </div>
+    <Fragment>
+      <div className='content'>
+        <UserInfo />
+        <div className='list-content'>{renderTokens}</div>
+      </div>
+      <Button className='add-token' onClick={onClickVisible}>
+        <img src={IconPlusCircle} alt='plus circle' />
+      </Button>
+      <CardModal visible={visible} className='input-form'>
+        <TokenForm onCancel={onClickVisible} onSubmit={onSubmit} />
+      </CardModal>
+    </Fragment>
   );
 };
 

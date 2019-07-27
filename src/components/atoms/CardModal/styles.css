@@ -1,0 +1,19 @@
+@keyframes pade-in {
+  0% {
+    opacity: 0;
+    transform: translate(calc(-50% - 16px), -50%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.modal > .card.modal-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  animation: pade-in 0.2s ease-in-out;
+}

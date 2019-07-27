@@ -12,5 +12,5 @@
 .input:focus,
 .input:active {
   background: rgba(12, 12, 32, 0.025);
-  border-bottom: 2px solid var(--color-primary);
+  border-bottom: 1px solid var(--color-primary);
 }

@@ -1,0 +1,45 @@
+.token-item {
+  position: relative;
+  padding: 32px 36px;
+}
+
+.token-item > .title {
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 24px;
+}
+
+.token-item > .name {
+  margin-bottom: 8px;
+
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 18px;
+}
+
+.token-item > .token {
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 48px;
+}
+
+.token-item > .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.token-item > .button.delete {
+  border-radius: 50%;
+  transition: background 0.12s ease-in-out, box-shadow 0.12s ease-in-out;
+}
+
+.token-item > .button.delete:hover,
+.token-item > .button.delete:active {
+  background: rgba(255, 255, 255, 0.2);
+}
