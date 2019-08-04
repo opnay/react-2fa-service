@@ -5,14 +5,14 @@ import * as firebase from 'firebase/app';
 
 import React from 'react';
 import { FirebaseContext } from '../../../context/FirebaseContext';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { __RouterContext } from 'react-router';
 import { APP_PATH } from '../../../router/path';
 import { Button } from '../../atoms/Styled';
 
-type Props = RouteComponentProps;
+type Props = {};
 
-const RootScreen = (props: Props) => {
-  const { history } = props;
+const RootScreen: React.FunctionComponent<Props> = () => {
+  const { history } = React.useContext(__RouterContext);
   const FirebaseApp = React.useContext(FirebaseContext);
 
   // Get Google Auth Provider
@@ -53,4 +53,4 @@ const RootScreen = (props: Props) => {
   );
 };
 
-export default withRouter(RootScreen);
+export default RootScreen;
