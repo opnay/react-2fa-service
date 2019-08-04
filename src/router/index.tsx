@@ -7,8 +7,6 @@ import {
   RouteProps,
   Redirect
 } from 'react-router-dom';
-import { hot } from 'react-hot-loader/root';
-
 import RootScreen from '../components/screen/Root';
 import { APP_PATH } from './path';
 import Main from '../components/screen/Main';
@@ -33,4 +31,4 @@ const AppRouter: React.FunctionComponent<{}> = () => {
   );
 };
 
-export default hot(AppRouter);
+export default AppRouter;
