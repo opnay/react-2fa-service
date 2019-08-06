@@ -7,6 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import AppRouter from './router';
 import { FirebaseProvider } from './context/FirebaseContext';
 import { DialogContextProvider } from './context/DialogContext';
+import { LoadingContextProvider } from './context/LoadingContext';
 
 type ProviderProps = {
   contexts: Array<React.ComponentType<any>>;
@@ -30,7 +31,8 @@ const ProviderComponent: React.FC<ProviderProps> = (props: ProviderProps) => {
 
 const ContextProviders: Array<React.ComponentType> = [
   FirebaseProvider,
-  DialogContextProvider
+  DialogContextProvider,
+  LoadingContextProvider
 ];
 
 const HotComponent = hot(Fragment);

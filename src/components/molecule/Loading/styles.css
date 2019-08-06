@@ -1,0 +1,36 @@
+.modal.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0, 0, 0, 0.75);
+  width: 100vw;
+  height: 100vh;
+}
+
+.modal.loading .message {
+  margin-top: 32px;
+  color: white;
+  font-size: 24px;
+}
+
+.modal.loading .circle {
+  background: white;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+
+  animation: loading-circle 0.5s linear infinite;
+}
+
+@keyframes loading-circle {
+  0% {
+    transform: scale(0.75);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
