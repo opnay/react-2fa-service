@@ -11,7 +11,7 @@ import {
 } from '../../../utils/react-support/Hook';
 import UserInfo from './components/UserInfo';
 import { TokenType } from '../../../types/2fa-service/secret-token';
-import CardModal from '../../atoms/CardModal/CardModal';
+import CardModal from '../../molecule/CardModal/CardModal';
 
 const Main: React.FC = () => {
   const [visible, toggleVisisble] = useToggle();
