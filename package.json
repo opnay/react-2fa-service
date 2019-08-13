@@ -10,7 +10,7 @@
     "@types/react-router-dom": "^4.3.4",
     "firebase": "^6.3.4",
     "node-2fa": "^1.1.2",
-    "react": "^16.8.6",
+    "react": "^16.9.0",
     "react-dom": "npm:@hot-loader/react-dom",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.0",
