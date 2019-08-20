@@ -31,14 +31,7 @@ module.exports = function(opt) {
       rules: [
         {
           test: /\.tsx?$/,
-          use: [
-            {
-              loader: 'ts-loader',
-              options: {
-                transpileOnly: true
-              }
-            }
-          ]
+          use: ['ts-loader', 'eslint-loader']
         },
         {
           test: /\.css$/,
