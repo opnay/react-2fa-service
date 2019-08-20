@@ -1,9 +1,22 @@
 {
-    "editor.tabSize": 2,
-    "prettier.singleQuote": true,
-    "typescript.preferences.quoteStyle": "single",
-    "javascript.preferences.quoteStyle": "single",
-    "prettier.jsxSingleQuote": true,
-    "editor.formatOnSave": true,
-    "prettier.arrowParens": "always"
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.preferences.quoteStyle": "single",
+
+  // prettier
+  "prettier.singleQuote": true,
+  "prettier.jsxSingleQuote": true,
+  "prettier.arrowParens": "always",
+
+  // eslint
+  "eslint.options": {
+    "ignorePath": ".eslintignore"
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ]
 }
