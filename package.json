@@ -37,7 +37,7 @@
     ]
   },
   "devDependencies": {
-    "@hot-loader/react-dom": "^16.8.6",
+    "@hot-loader/react-dom": "^16.9.0",
     "@types/react-hot-loader": "^4.1.0",
     "css-loader": "^3.2.0",
     "fork-ts-checker-webpack-plugin": "^1.5.0",
