@@ -10,7 +10,7 @@ import { DialogContextProvider } from './context/DialogContext';
 import { LoadingContextProvider } from './context/LoadingContext';
 
 type ProviderProps = {
-  contexts: Array<React.ComponentType<any>>;
+  contexts: React.ComponentType<any>[];
   children?: React.ReactNode;
 };
 
@@ -29,7 +29,7 @@ const ProviderComponent: React.FC<ProviderProps> = (props: ProviderProps) => {
   return <Fragment>{rendered}</Fragment>;
 };
 
-const ContextProviders: Array<React.ComponentType> = [
+const ContextProviders: React.ComponentType[] = [
   FirebaseProvider,
   DialogContextProvider,
   LoadingContextProvider
@@ -49,4 +49,4 @@ ReactDOM.render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+serviceWorker.register();

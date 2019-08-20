@@ -1,11 +1,9 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import {
   BrowserRouter,
   Switch,
   Route,
-  RouteComponentProps,
-  RouteProps,
-  Redirect
+  RouteComponentProps
 } from 'react-router-dom';
 import RootScreen from '../components/screen/Root';
 import { APP_PATH } from './path';

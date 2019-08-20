@@ -17,14 +17,19 @@ export function useToggle(defaultState: boolean = false): HookToggle {
 
 export function useSecretCollection() {
   const Firebase = useContext(FirebaseContext);
-  return useMemo(
-    () =>
-      Firebase.firestore()
-        .collection('2fa-service')
-        .doc(Firebase.auth().currentUser!.uid)
-        .collection('secrets'),
-    [Firebase]
-  );
+
+  return useMemo(() => {
+    const auth = Firebase.auth();
+
+    if (!auth.currentUser) {
+      throw new Error('useSecretCollection: Use it after Sign-in');
+    }
+
+    return Firebase.firestore()
+      .collection('2fa-service')
+      .doc(auth.currentUser.uid)
+      .collection('secrets');
+  }, [Firebase]);
 }
 
 export type HookFirestoreSecret = [
@@ -32,7 +37,7 @@ export type HookFirestoreSecret = [
   firebase.firestore.CollectionReference,
   () => void
 ];
-export type SecretType = Array<TokenType>;
+export type SecretType = TokenType[];
 
 export function useFirestoreSecret(): HookFirestoreSecret {
   const [tokens, setTokens] = useState<SecretType>([]);
