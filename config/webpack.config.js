@@ -19,7 +19,7 @@ module.exports = function(opt) {
     target: 'web',
     entry: './src/index.tsx',
     output: {
-      filename: 'index.[hash].js',
+      filename: opt.output.filename || 'index.[hash].js',
       path: _('build'),
       publicPath: publicUrl + '/'
     },
