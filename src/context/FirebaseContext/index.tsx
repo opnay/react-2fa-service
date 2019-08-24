@@ -7,7 +7,7 @@ import React, { Fragment } from 'react';
 // Config
 const config = Object.freeze(
   typeof process.env.FIREBASE === 'string'
-    ? JSON.parse(process.env.FIREBASE!)
+    ? JSON.parse(process.env.FIREBASE)
     : process.env.FIREBASE
 );
 

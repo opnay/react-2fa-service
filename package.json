@@ -39,7 +39,12 @@
   "devDependencies": {
     "@hot-loader/react-dom": "^16.9.0",
     "@types/react-hot-loader": "^4.1.0",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
     "css-loader": "^3.2.0",
+    "eslint": "^6.1.0",
+    "eslint-loader": "^2.2.1",
+    "eslint-plugin-react": "^7.14.3",
     "fork-ts-checker-webpack-plugin": "^1.5.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^4.0.0-beta.8",

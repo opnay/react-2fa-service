@@ -5,16 +5,17 @@ import ReactDOM from 'react-dom';
 
 export type ModalProps = {
   visible: boolean;
-  children?: React.ReactChild;
+  className?: string;
+  children?: React.ReactNode;
 };
 
 let modalCount = 0;
 
 const Modal = (props: ModalProps) => {
-  const { visible, children } = props;
+  const { visible, className, children } = props;
   const [count, setCount] = React.useState(0);
   const eId = React.useMemo(() => 'modal-' + count, [count]);
-  const eClass = React.useMemo(() => 'modal', []);
+  const eClass = React.useMemo(() => ['modal', className].join(' '), []);
 
   React.useEffect(() => {
     modalCount += 1;

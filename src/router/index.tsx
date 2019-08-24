@@ -3,34 +3,19 @@ import {
   BrowserRouter,
   Switch,
   Route,
-  RouteComponentProps,
-  RouteProps,
-  Redirect
+  RouteComponentProps
 } from 'react-router-dom';
-import { hot } from 'react-hot-loader/root';
-
 import RootScreen from '../components/screen/Root';
-import { FirebaseContext } from '../context/FirebaseContext';
 import { APP_PATH } from './path';
 import Main from '../components/screen/Main';
+import { __RouterContext } from 'react-router';
+import PrivateRoute from './PrivateRoute';
 
-const PrivateRoute = (props: RouteProps) => {
-  // Incorrect
-  const FirebaseApp = React.useContext(FirebaseContext);
+const NotFound: React.FunctionComponent<RouteComponentProps> = () => (
+  <div>404 Not Found</div>
+);
 
-  if (!FirebaseApp.auth().currentUser) {
-    return <Redirect to={APP_PATH.ROOT} />;
-  }
-
-  // Correct
-  return <Route {...props} />;
-};
-
-const NotFound = (props: RouteComponentProps) => {
-  return <div>404 Not Found</div>;
-};
-
-const AppRouter = (props: {}) => {
+const AppRouter: React.FunctionComponent<{}> = () => {
   return (
     <BrowserRouter>
       <Switch>
@@ -44,4 +29,4 @@ const AppRouter = (props: {}) => {
   );
 };
 
-export default hot(AppRouter);
+export default AppRouter;

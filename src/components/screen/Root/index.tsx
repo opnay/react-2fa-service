@@ -5,15 +5,17 @@ import * as firebase from 'firebase/app';
 
 import React from 'react';
 import { FirebaseContext } from '../../../context/FirebaseContext';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { __RouterContext } from 'react-router';
 import { APP_PATH } from '../../../router/path';
 import { Button } from '../../atoms/Styled';
+import { isSignedIn, AuthState } from '../../../utils/firebase/Authentication';
 
-type Props = RouteComponentProps;
+type Props = {};
 
-const RootScreen = (props: Props) => {
-  const { history } = props;
+const RootScreen: React.FunctionComponent<Props> = () => {
+  const { history } = React.useContext(__RouterContext);
   const FirebaseApp = React.useContext(FirebaseContext);
+  const authState = isSignedIn();
 
   // Get Google Auth Provider
   const GoogleAuthProvider = React.useMemo(() => {
@@ -29,14 +31,18 @@ const RootScreen = (props: Props) => {
         if (!val.credential) {
           throw new Error('Failed to Google Auth');
         }
-
-        const token: firebase.auth.OAuthCredential = val.credential;
-        history.push(APP_PATH.MAIN);
       })
       .catch((err) => {
         console.error(err);
       });
   }, [FirebaseApp]);
+
+  React.useEffect(() => {
+    // Already Signed In
+    if (authState === AuthState.SIGN_IN) {
+      history.replace(APP_PATH.MAIN);
+    }
+  }, [authState]);
 
   return (
     <div className='root'>
@@ -53,4 +59,4 @@ const RootScreen = (props: Props) => {
   );
 };
 
-export default withRouter(RootScreen);
+export default RootScreen;

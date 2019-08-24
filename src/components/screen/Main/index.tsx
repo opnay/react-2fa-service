@@ -11,9 +11,13 @@ import {
 } from '../../../utils/react-support/Hook';
 import UserInfo from './components/UserInfo';
 import { TokenType } from '../../../types/2fa-service/secret-token';
-import CardModal from '../../atoms/CardModal/CardModal';
+import CardModal from '../../molecule/CardModal/CardModal';
+import Progress from '../../atoms/Progress';
+
+const TIME_OUT = 1000; // 1s
 
 const Main: React.FC = () => {
+  const [[percent, animated], setProgress] = React.useState([0, false]);
   const [visible, toggleVisisble] = useToggle();
   const onClickVisible = React.useCallback(() => toggleVisisble(), [
     toggleVisisble
@@ -45,6 +49,18 @@ const Main: React.FC = () => {
     [collection, loadTokens]
   );
 
+  const updateTime = React.useCallback(() => {
+    const time = new Date().getTime();
+    // 0s ... 30s
+    const per = (time % 30000) / 300;
+    setProgress([per + 1, per >= 1]);
+
+    // Each {TIME_OUT}s
+    setTimeout(updateTime, TIME_OUT - (time % TIME_OUT));
+  }, [setProgress]);
+
+  React.useEffect(() => updateTime(), []);
+
   // Render
   const renderTokens = React.useMemo(
     () =>
@@ -62,6 +78,7 @@ const Main: React.FC = () => {
     <Fragment>
       <div className='content'>
         <UserInfo />
+        <Progress value={percent} animated={animated} />
         <div className='list-content'>{renderTokens}</div>
       </div>
       <Button className='add-token' onClick={onClickVisible}>

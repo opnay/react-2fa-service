@@ -1,5 +1,5 @@
 import React from 'react';
-import CardModal from '../../components/atoms/CardModal/CardModal';
+import CardModal from '../../components/molecule/CardModal/CardModal';
 import { useToggle } from '../../utils/react-support/Hook';
 import Dialog, { DialogProps } from '../../components/molecule/Dialog';
 
