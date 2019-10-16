@@ -13,7 +13,7 @@
     "react": "^16.9.0",
     "react-dom": "npm:@hot-loader/react-dom",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.1.1",
+    "react-scripts": "3.2.0",
     "typescript": "3.6.3"
   },
   "scripts": {
