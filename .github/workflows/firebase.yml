@@ -1,0 +1,26 @@
+name: Deploy for firebase
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Use yarn
+      run: npm install -g yarn firebase-tools
+    - name: Install Pakcage
+      run: yarn
+    - name: Build
+      run: yarn build
+      env:
+        FIREBASE: ${{ secrets.FIREBASE_CONFIG }}
+        PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
+    - name: Deploy
+      run: |
+        cd ./.firebase
+        cp -r ../build ./public
+        firebase deploy --token ${{ secrets.FIREBASE_TOKEN }}
