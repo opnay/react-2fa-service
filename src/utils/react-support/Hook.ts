@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 
-import { useState, useCallback, useContext, useMemo, useEffect } from 'react';
+import React from 'react';
+import { useState, useCallback, useContext, useMemo } from 'react';
 import { TokenType } from '../../types/2fa-service/secret-token';
 import { FirebaseContext } from '../../context/FirebaseContext';
 
@@ -56,7 +57,9 @@ export function useFirestoreSecret(): HookFirestoreSecret {
   }, [collection]);
 
   // Initial Loading
-  useEffect(() => loadSecrets(), []);
+  useMount(() => loadSecrets());
 
   return [tokens, collection, loadSecrets];
 }
+
+export const useMount = (callback: () => void) => React.useEffect(callback, []);
