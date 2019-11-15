@@ -1,27 +1,9 @@
 module.exports = {
-  parser: '@typescript-eslint/parser',
-  env: {
-    browser: true,
-    es6: true
-  },
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly'
-  },
-  parserOptions: {
-    ecmaVersion: 2018,
-    ecmaFeatures: {
-      jsx: true
-    },
-    sourceType: 'module',
-    project: './tsconfig.json'
-  },
-  plugins: ['@typescript-eslint', 'react'],
-  extends: ['plugin:@typescript-eslint/recommended'],
+  extends: ['react-app'],
   rules: {
     // Use 'indent' instead of typescript-eslint
-    indent: ['error', 2],
-    '@typescript-eslint/indent': 'off',
+    indent: 'off',
+    '@typescript-eslint/indent': ['error', 2],
 
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
@@ -35,13 +17,6 @@ module.exports = {
       { accessibility: 'no-public' }
     ],
 
-    '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/no-explicit-any': 'off'
   },
-  settings: {
-    react: {
-      progma: 'React',
-      version: 'detect'
-    }
-  }
 };

@@ -7,15 +7,15 @@ import React from 'react';
 import { FirebaseContext } from '../../../context/FirebaseContext';
 import { __RouterContext } from 'react-router';
 import { APP_PATH } from '../../../router/path';
-import { Button } from '../../atoms/Styled';
-import { isSignedIn, AuthState } from '../../../utils/firebase/Authentication';
+import { Button } from '../../atoms/Classed';
+import { useSignIn, AuthState } from '../../../utils/firebase/Authentication';
 
 type Props = {};
 
 const RootScreen: React.FunctionComponent<Props> = () => {
   const { history } = React.useContext(__RouterContext);
   const FirebaseApp = React.useContext(FirebaseContext);
-  const authState = isSignedIn();
+  const authState = useSignIn();
 
   // Get Google Auth Provider
   const GoogleAuthProvider = React.useMemo(() => {

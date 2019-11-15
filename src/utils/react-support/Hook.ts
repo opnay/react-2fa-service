@@ -6,10 +6,10 @@ import { FirebaseContext } from '../../context/FirebaseContext';
 
 export type HookToggle = [boolean, (s?: boolean) => void];
 
-export function useToggle(defaultState: boolean = false): HookToggle {
+export function useToggle(defaultState = false): HookToggle {
   const [state, setState] = useState(defaultState);
   const setToggle = useCallback(
-    (toggleState: boolean = !state) => setState(toggleState),
+    (toggleState = !state) => setState(toggleState),
     [state, setState]
   );
   return [state, setToggle];

@@ -1,7 +1,7 @@
 import './styles.css';
 
 import React from 'react';
-import { Button } from '../../atoms/Styled';
+import { Button } from '../../atoms/Classed';
 
 export type DialogProps = {
   className?: string;

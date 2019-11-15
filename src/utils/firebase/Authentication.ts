@@ -8,7 +8,7 @@ export enum AuthState {
   SIGN_OUT
 }
 
-export const isSignedIn = (): AuthState => {
+export const useSignIn = (): AuthState => {
   const { toggleLoading } = useContext(LoadingContext);
   const FirebaseApp = useContext(FirebaseContext);
   const [state, setState] = useState(AuthState.NONE);

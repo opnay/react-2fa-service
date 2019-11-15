@@ -3,7 +3,7 @@ import IconDelete from '../../../../../assets/icons/Delete.svg';
 
 import React from 'react';
 import Node2FA from 'node-2fa';
-import { Button } from '../../../../atoms/Styled';
+import { Button } from '../../../../atoms/Classed';
 import { TokenType } from '../../../../../types/2fa-service/secret-token';
 import { DialogContext } from '../../../../../context/DialogContext';
 import { useSecretCollection } from '../../../../../utils/react-support/Hook';

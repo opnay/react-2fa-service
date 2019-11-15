@@ -15,7 +15,7 @@ const Modal = (props: ModalProps) => {
   const { visible, className, children } = props;
   const [count, setCount] = React.useState(0);
   const eId = React.useMemo(() => 'modal-' + count, [count]);
-  const eClass = React.useMemo(() => ['modal', className].join(' '), []);
+  const eClass = React.useMemo(() => ['modal', className].join(' '), [className]);
 
   React.useEffect(() => {
     modalCount += 1;

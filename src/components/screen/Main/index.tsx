@@ -4,7 +4,7 @@ import IconPlusCircle from '../../../assets/icons/PlusCircle.svg';
 import React, { Fragment } from 'react';
 import TokenItem from './components/TokenItem';
 import TokenForm from './components/TokenForm';
-import { Button } from '../../atoms/Styled';
+import { Button } from '../../atoms/Classed';
 import {
   useToggle,
   useFirestoreSecret
