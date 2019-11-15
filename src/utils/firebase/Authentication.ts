@@ -1,6 +1,7 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState } from 'react';
 import { FirebaseContext } from '../../context/FirebaseContext';
 import { LoadingContext } from '../../context/LoadingContext';
+import { useMount } from '../react-support/Hook';
 
 export enum AuthState {
   NONE,
@@ -8,12 +9,12 @@ export enum AuthState {
   SIGN_OUT
 }
 
-export const isSignedIn = (): AuthState => {
+export const useSignIn = (): AuthState => {
   const { toggleLoading } = useContext(LoadingContext);
   const FirebaseApp = useContext(FirebaseContext);
   const [state, setState] = useState(AuthState.NONE);
 
-  useEffect(() => {
+  useMount(() => {
     toggleLoading(true, '로그인 확인중...');
     FirebaseApp.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -26,7 +27,7 @@ export const isSignedIn = (): AuthState => {
     });
 
     return () => toggleLoading(false);
-  }, []);
+  });
 
   return state;
 };

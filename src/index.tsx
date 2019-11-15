@@ -1,5 +1,3 @@
-import { hot } from 'react-hot-loader/root';
-
 import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -35,14 +33,10 @@ const ContextProviders: React.ComponentType[] = [
   LoadingContextProvider
 ];
 
-const HotComponent = hot(Fragment);
-
 ReactDOM.render(
-  <HotComponent>
-    <ProviderComponent contexts={ContextProviders}>
-      <AppRouter />
-    </ProviderComponent>
-  </HotComponent>,
+  <ProviderComponent contexts={ContextProviders}>
+    <AppRouter />
+  </ProviderComponent>,
   document.getElementById('root')
 );
 

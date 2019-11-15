@@ -1,15 +1,16 @@
 import firebase from 'firebase/app';
 
-import { useState, useCallback, useContext, useMemo, useEffect } from 'react';
+import React from 'react';
+import { useState, useCallback, useContext, useMemo } from 'react';
 import { TokenType } from '../../types/2fa-service/secret-token';
 import { FirebaseContext } from '../../context/FirebaseContext';
 
 export type HookToggle = [boolean, (s?: boolean) => void];
 
-export function useToggle(defaultState: boolean = false): HookToggle {
+export function useToggle(defaultState = false): HookToggle {
   const [state, setState] = useState(defaultState);
   const setToggle = useCallback(
-    (toggleState: boolean = !state) => setState(toggleState),
+    (toggleState = !state) => setState(toggleState),
     [state, setState]
   );
   return [state, setToggle];
@@ -56,7 +57,9 @@ export function useFirestoreSecret(): HookFirestoreSecret {
   }, [collection]);
 
   // Initial Loading
-  useEffect(() => loadSecrets(), []);
+  useMount(() => loadSecrets());
 
   return [tokens, collection, loadSecrets];
 }
+
+export const useMount = (callback: () => void) => React.useEffect(callback, []);

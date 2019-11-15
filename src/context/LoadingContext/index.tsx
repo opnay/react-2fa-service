@@ -30,7 +30,7 @@ export const LoadingContextProvider = (props: Props) => {
       toggleLoadingVisible(visible);
       setMessage(message);
     },
-    []
+    [toggleLoadingVisible]
   );
 
   const context = React.useMemo(

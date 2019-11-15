@@ -35,7 +35,7 @@ export const DialogContextProvider = (props: Props) => {
 
       toggleDialogVisible(visible);
     },
-    []
+    [toggleDialogVisible]
   );
 
   const context = React.useMemo(

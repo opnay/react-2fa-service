@@ -3,10 +3,10 @@ import IconDelete from '../../../../../assets/icons/Delete.svg';
 
 import React from 'react';
 import Node2FA from 'node-2fa';
-import { Button } from '../../../../atoms/Styled';
+import { Button } from '../../../../atoms/Classed';
 import { TokenType } from '../../../../../types/2fa-service/secret-token';
 import { DialogContext } from '../../../../../context/DialogContext';
-import { useSecretCollection } from '../../../../../utils/react-support/Hook';
+import { useSecretCollection, useMount } from '../../../../../utils/react-support/Hook';
 import { DialogProps } from '../../../../molecule/Dialog';
 
 const INITIAL_TOKEN = 'XXX XXX';
@@ -66,7 +66,7 @@ const TokenItem = (props: Props) => {
       onCancel: () => toggleDialog(false),
       onPositive
     });
-  }, [secretCollection, toggleDialog, loadSecrets]);
+  }, [toggleDialog, service, secretCollection, name, secret, loadSecrets]);
 
   const [token, _setToken] = React.useState(INITIAL_TOKEN);
   // setToken to make format as 'xxx xxx'
@@ -93,7 +93,7 @@ const TokenItem = (props: Props) => {
   }, [secret, setToken]);
 
   // start infinite loop
-  React.useEffect(() => generateToken(), []);
+  useMount(() => generateToken());
 
   return (
     <div className='token-item'>

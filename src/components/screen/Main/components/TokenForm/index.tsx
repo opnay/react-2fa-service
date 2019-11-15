@@ -1,7 +1,7 @@
 import './styles.css';
 
 import React from 'react';
-import { Input, Button } from '../../../../atoms/Styled';
+import { Input, Button } from '../../../../atoms/Classed';
 
 type Props = {
   onCancel: () => void;
@@ -9,15 +9,9 @@ type Props = {
 };
 
 const TokenForm = (props: Props) => {
-  const inputServiceName = React.useRef<HTMLInputElement>() as React.RefObject<
-    HTMLInputElement
-  >;
-  const inputName = React.useRef<HTMLInputElement>() as React.RefObject<
-    HTMLInputElement
-  >;
-  const inputSecret = React.useRef<HTMLInputElement>() as React.RefObject<
-    HTMLInputElement
-  >;
+  const inputServiceName = React.useRef<HTMLInputElement>(null);
+  const inputName = React.useRef<HTMLInputElement>(null);
+  const inputSecret = React.useRef<HTMLInputElement>(null);
 
   const onCancel = React.useCallback(() => {
     const { onCancel } = props;
@@ -35,7 +29,7 @@ const TokenForm = (props: Props) => {
     }
 
     onCancel();
-  }, [inputServiceName, inputName, inputSecret]);
+  }, [props]);
 
   const onSubmit = React.useCallback(() => {
     const { onSubmit: submit } = props;
@@ -54,7 +48,7 @@ const TokenForm = (props: Props) => {
         );
       }
     })().then(onCancel);
-  }, [inputName, inputSecret, onCancel]);
+  }, [onCancel, props]);
 
   return (
     <div className={'token-form'}>
