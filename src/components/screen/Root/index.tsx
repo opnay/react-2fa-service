@@ -35,14 +35,14 @@ const RootScreen: React.FunctionComponent<Props> = () => {
       .catch((err) => {
         console.error(err);
       });
-  }, [FirebaseApp]);
+  }, [FirebaseApp, GoogleAuthProvider]);
 
   React.useEffect(() => {
     // Already Signed In
     if (authState === AuthState.SIGN_IN) {
       history.replace(APP_PATH.MAIN);
     }
-  }, [authState]);
+  }, [authState, history]);
 
   return (
     <div className='root'>

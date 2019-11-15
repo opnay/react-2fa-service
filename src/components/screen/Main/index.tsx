@@ -7,7 +7,8 @@ import TokenForm from './components/TokenForm';
 import { Button } from '../../atoms/Classed';
 import {
   useToggle,
-  useFirestoreSecret
+  useFirestoreSecret,
+  useMount
 } from '../../../utils/react-support/Hook';
 import UserInfo from './components/UserInfo';
 import { TokenType } from '../../../types/2fa-service/secret-token';
@@ -59,7 +60,7 @@ const Main: React.FC = () => {
     setTimeout(updateTime, TIME_OUT - (time % TIME_OUT));
   }, [setProgress]);
 
-  React.useEffect(() => updateTime(), []);
+  useMount(() => updateTime());
 
   // Render
   const renderTokens = React.useMemo(
@@ -71,7 +72,7 @@ const Main: React.FC = () => {
           {...it}
         />
       )),
-    [tokens]
+    [loadTokens, tokens]
   );
 
   return (

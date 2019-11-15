@@ -21,7 +21,7 @@ const Loading = (props: Props) => {
 
   return (
     <Modal visible={visible} className={cn}>
-      <div className='circle' />
+      <div className='circle' {...loadingProps} />
       {msg}
     </Modal>
   );
