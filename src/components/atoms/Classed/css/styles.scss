@@ -8,12 +8,12 @@
   outline: none;
 
   transition: background-color 0.2s ease-in-out, border 0.2s ease-in-out;
-}
 
-.input:focus,
-.input:active {
-  background: rgba(12, 12, 32, 0.025);
-  border-bottom: 1px solid var(--color-primary);
+  &:focus,
+  &:active {
+    background: rgba(12, 12, 32, 0.025);
+    border-bottom: 1px solid var(--color-primary);
+  }
 }
 
 /* Button */
@@ -31,12 +31,15 @@
   font-size: 1.1rem;
 
   transition: box-shadow ease-in-out 0.1s;
+
+  &:hover {
+    box-shadow: 2px 2px 4px var(--color-shadow);
+  }
+
+  &:active {
+    box-shadow: 2px 2px 8px var(--color-shadow);
+  }
 }
 
-.button:hover {
-  box-shadow: 2px 2px 4px var(--color-shadow);
-}
 
-.button:active {
-  box-shadow: 2px 2px 8px var(--color-shadow);
-}
+@import './card.scss';

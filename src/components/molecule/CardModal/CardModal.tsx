@@ -1,8 +1,8 @@
 import './styles.css';
 
 import React from 'react';
+import { Card } from '../../atoms/Classed';
 import Modal, { ModalProps } from '../../atoms/Modal';
-import Card from '../../atoms/Card';
 
 type Props = ModalProps & React.HTMLAttributes<HTMLDivElement>;
 

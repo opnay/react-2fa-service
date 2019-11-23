@@ -1,4 +1,4 @@
-import './styles.css';
+import './css/styles.scss';
 
 import React, { forwardRef } from 'react';
 
@@ -47,3 +47,6 @@ export default Classed;
 export const Input = Classed('input', 'input');
 
 export const Button = Classed('button', 'button');
+
+// Card
+export const Card = Classed('div', 'card');
