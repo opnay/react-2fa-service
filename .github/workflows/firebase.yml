@@ -20,7 +20,7 @@ jobs:
     - name: Build
       run: yarn build
       env:
-        FIREBASE: ${{ secrets.FIREBASE_CONFIG }}
+        REACT_APP_FIREBASE: ${{ secrets.FIREBASE_CONFIG }}
         PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
     - name: Deploy
       run: |
