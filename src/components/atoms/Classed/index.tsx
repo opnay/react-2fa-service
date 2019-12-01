@@ -1,52 +1,49 @@
 import './css/styles.scss';
 
-import React, { forwardRef } from 'react';
+import React from 'react';
 
-type HookClassName = [string, (cn?: string | string[]) => void];
-const useClassName = (initial: string): HookClassName => {
-  const [_className, _setClassName] = React.useState(initial);
-  const appendClassName = React.useCallback((className?: string | string[]) => {
-    const cn = [_className];
-
-    if (Array.isArray(className)) {
-      cn.push(...className);
-    } else if (!!className) {
-      cn.push(className);
-    }
-
-    _setClassName(cn.join(' '));
-  }, [_className]);
-
-  return [_className, appendClassName];
+export const useClassName = (...classes: any[]) => {
+  return React.useMemo(() => classes.reduce((prev, cur) => !!cur ? `${prev} ${cur}` : prev, ''), [classes]);
 };
 
-const Classed = <T extends HTMLElement>(name: string, classed: string, Component?: any) => {
-  const ClassedComponent = (props: { [x: string]: any }, ref: React.Ref<T>) => {
-    const { className } = props;
-    const [_className, _appendClassName] = useClassName(classed);
-    React.useEffect(() => {
-      if (_className.indexOf(className) < 0) {
-        _appendClassName(className);
-      }
-    }, [_appendClassName, _className, className]);
+// Classed('div');
+//  => <div class="div"></div>
 
-    return React.createElement(Component || name, {
-      ...props,
-      className: _className,
-      ref
-    });
-  };
+// Classed('div', 'header-wrapper');
+//  => <div class="header-wrapper"></div>
+
+// Classed('BorderCard', 'border', Card);
+//  => <Card class="border"></Card>
+//  debug => <BorderCard>
+
+export type PropsOfComponent<C extends React.ComponentType> = C extends React.ComponentType<infer P> ? P : {};
+export type Element<H extends keyof React.ReactHTML> = React.ReactHTML[H] extends React.DetailedHTMLFactory<React.HTMLAttributes<infer E>, infer E> ? E : never;
+export type ElementProps<H extends keyof React.ReactHTML> = React.ClassAttributes<Element<H>> & React.HTMLAttributes<H>
+
+export function ClassedRef<K extends keyof React.ReactHTML>(name: K, classed?: string): React.ForwardRefExoticComponent<React.PropsWithoutRef<ElementProps<K>> & React.RefAttributes<Element<K>>> {
+  function ClassedComponent(props: ElementProps<K>, ref: React.Ref<Element<K>>) {
+    const { className } = props;
+    const _className = useClassName(classed || name.toLowerCase(), className);
+    return React.createElement(name, { ...props, className: _className, ref });
+  }
+
+  return React.forwardRef(ClassedComponent);
+}
+
+export function Classed<P extends { className?: string }>(name: string, classed: string, component: React.ComponentType<P>): React.FunctionComponent<P> {
+  function ClassedComponent(props: P) {
+    const { className } = props;
+    const _className = useClassName(classed || name.toLowerCase(), className);
+    return React.createElement(component, { ...props, className: _className });
+  }
 
   ClassedComponent.displayName = name;
 
-  return forwardRef(ClassedComponent);
-};
+  return ClassedComponent;
+}
 
-export default Classed;
-
-export const Input = Classed('input', 'input');
-
-export const Button = Classed('button', 'button');
+export const Input = ClassedRef('input', 'input');
+export const Button = ClassedRef('button', 'button');
 
 // Card
-export const Card = Classed('div', 'card');
+export const Card = ClassedRef('div', 'card');

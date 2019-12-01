@@ -2,6 +2,10 @@ import './styles.css';
 
 import React, { useMemo } from 'react';
 import Modal, { ModalProps } from '../../atoms/Modal';
+import { Classed, ClassedRef } from '../../atoms/Classed';
+
+const BaseLoadingModal = Classed('BaseLoadingModal', 'loading', Modal);
+const Circle = ClassedRef('div', 'circle');
 
 type Props = ModalProps & {
   message?: string;
@@ -9,7 +13,6 @@ type Props = ModalProps & {
 
 const Loading = (props: Props) => {
   const { message, visible, className, ...loadingProps } = props;
-  const cn = useMemo(() => ['loading', className].join(' '), [className]);
 
   const msg = useMemo(() => {
     if (!!message) {
@@ -20,10 +23,10 @@ const Loading = (props: Props) => {
   }, [message]);
 
   return (
-    <Modal visible={visible} className={cn}>
-      <div className='circle' {...loadingProps} />
+    <BaseLoadingModal className={className} visible={visible}>
+      <Circle {...loadingProps} />
       {msg}
-    </Modal>
+    </BaseLoadingModal>
   );
 };
 

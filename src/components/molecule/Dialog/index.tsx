@@ -1,7 +1,9 @@
 import './styles.css';
 
 import React from 'react';
-import { Button } from '../../atoms/Classed';
+import { Button, ClassedRef } from '../../atoms/Classed';
+
+const BaseDialog = ClassedRef('div', 'dialog');
 
 export type DialogProps = {
   className?: string;
@@ -23,10 +25,9 @@ const Dialog: React.FC<DialogProps> = (props: DialogProps) => {
     onCancel,
     onPositive
   } = props;
-  const cn = React.useMemo(() => ['dialog', className].join(' '), [className]);
 
   return (
-    <div className={cn}>
+    <BaseDialog className={className}>
       <div className='message'>{message}</div>
       <div className='button-group'>
         <Button className='negative' onClick={onCancel}>
@@ -36,7 +37,7 @@ const Dialog: React.FC<DialogProps> = (props: DialogProps) => {
           {textPositive}
         </Button>
       </div>
-    </div>
+    </BaseDialog>
   );
 };
 

@@ -1,10 +1,10 @@
 import './styles.css';
 
 import React from 'react';
-import { Card } from '../../atoms/Classed';
+import { Card, PropsOfComponent } from '../../atoms/Classed';
 import Modal, { ModalProps } from '../../atoms/Modal';
 
-type Props = ModalProps & React.HTMLAttributes<HTMLDivElement>;
+type Props = ModalProps & PropsOfComponent<typeof Card>;
 
 const CardModal = (props: Props) => {
   const { visible, className, ...cardProps } = props;

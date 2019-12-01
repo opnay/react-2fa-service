@@ -2,20 +2,21 @@ import './styles.css';
 
 import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
+import { ClassedRef, PropsOfComponent } from '../Classed';
 
-export type ModalProps = {
+const BaseModal = ClassedRef('div', 'modal');
+
+export type ModalProps = PropsOfComponent<typeof BaseModal> & {
   visible: boolean;
-  className?: string;
   children?: React.ReactNode;
 };
 
 let modalCount = 0;
 
 const Modal = (props: ModalProps) => {
-  const { visible, className, children } = props;
+  const { visible, ...modalProps } = props;
   const [count, setCount] = React.useState(0);
   const eId = React.useMemo(() => 'modal-' + count, [count]);
-  const eClass = React.useMemo(() => ['modal', className].join(' '), [className]);
 
   React.useEffect(() => {
     modalCount += 1;
@@ -26,9 +27,7 @@ const Modal = (props: ModalProps) => {
     return <Fragment />;
   } else {
     return ReactDOM.createPortal(
-      <div id={eId} className={eClass}>
-        {children}
-      </div>,
+      <BaseModal {...modalProps} id={eId} />,
       document.body
     );
   }
