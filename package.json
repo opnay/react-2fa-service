@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@types/react": "^16.9.35",
-    "@types/react-dom": "^16.9.5",
+    "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
     "firebase": "^7.12.0",
     "node-2fa": "^1.1.2",
