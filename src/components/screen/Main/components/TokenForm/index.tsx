@@ -9,45 +9,24 @@ type Props = {
 };
 
 const TokenForm = (props: Props) => {
+  const { onCancel } = props;
   const inputServiceName = React.useRef<HTMLInputElement>(null);
   const inputName = React.useRef<HTMLInputElement>(null);
   const inputSecret = React.useRef<HTMLInputElement>(null);
 
-  const onCancel = React.useCallback(() => {
-    const { onCancel } = props;
+  const submit = React.useCallback(async () => {
+    const { onSubmit: submit } = props;
 
-    if (inputServiceName.current) {
-      inputServiceName.current.value = '';
-    }
-
-    if (inputName.current) {
-      inputName.current.value = '';
-    }
-
-    if (inputSecret.current) {
-      inputSecret.current.value = '';
+    // Submit
+    if (inputServiceName.current && inputName.current && inputSecret.current) {
+      submit(
+        inputServiceName.current.value,
+        inputName.current.value,
+        inputSecret.current.value
+      );
     }
 
     onCancel();
-  }, [props]);
-
-  const onSubmit = React.useCallback(() => {
-    const { onSubmit: submit } = props;
-
-    (async () => {
-      // Submit
-      if (
-        inputServiceName.current &&
-        inputName.current &&
-        inputSecret.current
-      ) {
-        submit(
-          inputServiceName.current.value,
-          inputName.current.value,
-          inputSecret.current.value
-        );
-      }
-    })().then(onCancel);
   }, [onCancel, props]);
 
   return (
@@ -62,7 +41,7 @@ const TokenForm = (props: Props) => {
         <Button className={'negative'} onClick={onCancel}>
           취소
         </Button>
-        <Button className={'positive'} onClick={onSubmit}>
+        <Button className={'positive'} onClick={submit}>
           확인
         </Button>
       </div>

@@ -15,17 +15,11 @@ const UserInfo = (prop: Props) => {
     return [current.displayName, current.photoURL];
   }, [FirebaseApp]);
 
-  const profile = React.useMemo(() => {
-    if (!!userProfile) {
-      return <img className='profile' src={userProfile} alt='profile' />;
-    } else {
-      return undefined;
-    }
-  }, [userProfile]);
-
   return (
     <div className='user-info'>
-      {profile}
+      {userProfile && (
+        <img className='profile' src={userProfile} alt='profile' />
+      )}
       <div className='name'>{userName}</div>
     </div>
   );

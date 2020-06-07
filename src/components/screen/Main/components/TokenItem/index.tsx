@@ -6,7 +6,10 @@ import Node2FA from 'node-2fa';
 import { Button } from '../../../../atoms/Classed';
 import { TokenType } from '../../../../../types/2fa-service/secret-token';
 import { DialogContext } from '../../../../../context/DialogContext';
-import { useSecretCollection, useMount } from '../../../../../utils/react-support/Hook';
+import {
+  useSecretCollection,
+  useMount,
+} from '../../../../../utils/react-support/Hook';
 import { DialogProps } from '../../../../molecule/Dialog';
 
 const INITIAL_TOKEN = 'XXX XXX';
@@ -18,7 +21,7 @@ const catchDialog = (
   toggleDialog(true, {
     message: '오류가 발생했습니다.',
     onCancel: () => toggleDialog(false),
-    onPositive: () => toggleDialog(false)
+    onPositive: () => toggleDialog(false),
   });
   console.error(err);
 
@@ -36,7 +39,7 @@ const TokenItem = (props: Props) => {
 
   // Delete Modal
   const secretCollection = useSecretCollection();
-  const onClickDelete = React.useCallback(() => {
+  const clickDelete = React.useCallback(() => {
     const onPositive = async () => {
       toggleDialog(false);
 
@@ -64,7 +67,7 @@ const TokenItem = (props: Props) => {
       className: 'alert',
       message: `${service}을(를) 삭제하시겠습니까?`,
       onCancel: () => toggleDialog(false),
-      onPositive
+      onPositive,
     });
   }, [toggleDialog, service, secretCollection, name, secret, loadSecrets]);
 
@@ -100,7 +103,7 @@ const TokenItem = (props: Props) => {
       <div className='title'>{service}</div>
       <div className='name'>{name}</div>
       <div className='token'>{token}</div>
-      <Button className='delete' onClick={onClickDelete}>
+      <Button className='delete' onClick={clickDelete}>
         <img src={IconDelete} alt='delete' />
       </Button>
     </div>

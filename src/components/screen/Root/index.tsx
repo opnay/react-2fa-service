@@ -20,21 +20,17 @@ const RootScreen: React.FunctionComponent<Props> = () => {
   // Get Google Auth Provider
   const GoogleAuthProvider = React.useMemo(() => {
     FirebaseApp.auth().languageCode = 'kr';
+    FirebaseApp.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
     return new firebase.auth.GoogleAuthProvider();
   }, [FirebaseApp]);
 
   // onClickGoogle Button
-  const onClickGoogle = React.useCallback(() => {
-    return FirebaseApp.auth()
-      .signInWithPopup(GoogleAuthProvider)
-      .then((val: firebase.auth.UserCredential) => {
-        if (!val.credential) {
-          throw new Error('Failed to Google Auth');
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+  const clickGoogle = React.useCallback(async () => {
+    const user = await FirebaseApp.auth().signInWithPopup(GoogleAuthProvider);
+
+    if (!user.credential) {
+      throw new Error('Failed to Google Auth');
+    }
   }, [FirebaseApp, GoogleAuthProvider]);
 
   React.useEffect(() => {
@@ -51,7 +47,7 @@ const RootScreen: React.FunctionComponent<Props> = () => {
       </div>
       <div className='content'>
         <h1>로그인</h1>
-        <Button className='button' onClick={onClickGoogle}>
+        <Button className='button' onClick={clickGoogle}>
           Google SignIn
         </Button>
       </div>

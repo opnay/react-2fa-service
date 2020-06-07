@@ -8,7 +8,7 @@ import { Button } from '../../atoms/Classed';
 import {
   useToggle,
   useFirestoreSecret,
-  useMount
+  useMount,
 } from '../../../utils/react-support/Hook';
 import UserInfo from './components/UserInfo';
 import { TokenType } from '../../../types/2fa-service/secret-token';
@@ -20,32 +20,28 @@ const TIME_OUT = 1000; // 1s
 const Main: React.FC = () => {
   const [[percent, animated], setProgress] = React.useState([0, false]);
   const [visible, toggleVisisble] = useToggle();
-  const onClickVisible = React.useCallback(() => toggleVisisble(), [
-    toggleVisisble
+  const clickToggle = React.useCallback(() => toggleVisisble(), [
+    toggleVisisble,
   ]);
 
   // Token
   const [tokens, collection, loadTokens] = useFirestoreSecret();
 
   // Callback
-  const onSubmit = React.useCallback(
-    (service: string, name: string, secret: string) => {
+  const submit = React.useCallback(
+    async (service: string, name: string, secret: string) => {
       if (!service || !name || !secret) {
         throw new Error('Invalid argument');
       }
 
       // Create document data
       const data: TokenType = { name, service, secret };
-      return collection
+      await collection
         .doc(`${service}_${name.split('@')[0]}`)
-        .set(data, { merge: true })
-        .then(() => {
-          // Call new Doc from firestore server
-          return loadTokens();
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+        .set(data, { merge: true });
+
+      // Call new Doc from firestore server
+      return loadTokens();
     },
     [collection, loadTokens]
   );
@@ -62,32 +58,29 @@ const Main: React.FC = () => {
 
   useMount(() => updateTime());
 
-  // Render
-  const renderTokens = React.useMemo(
-    () =>
-      tokens.map((it: TokenType) => (
-        <TokenItem
-          key={`${it.service}-${it.secret.slice(0, 8)}`}
-          loadSecrets={loadTokens}
-          {...it}
-        />
-      )),
-    [loadTokens, tokens]
-  );
-
   return (
     <Fragment>
       <div className='content'>
         <UserInfo />
         <Progress value={percent} animated={animated} />
-        <div className='list-content'>{renderTokens}</div>
+        <div className='list-content'>
+          {tokens.map((it) => (
+            <TokenItem
+              key={`${it.service}-${it.secret.slice(0, 8)}`}
+              loadSecrets={loadTokens}
+              {...it}
+            />
+          ))}
+        </div>
       </div>
-      <Button className='add-token' onClick={onClickVisible}>
+      <Button className='add-token' onClick={clickToggle}>
         <img src={IconPlusCircle} alt='plus circle' />
       </Button>
-      <CardModal visible={visible} className='input-form'>
-        <TokenForm onCancel={onClickVisible} onSubmit={onSubmit} />
-      </CardModal>
+      {visible && (
+        <CardModal visible className='input-form'>
+          <TokenForm onCancel={clickToggle} onSubmit={submit} />
+        </CardModal>
+      )}
     </Fragment>
   );
 };
