@@ -5,7 +5,7 @@
   "dependencies": {
     "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.8",
-    "@types/react-router-dom": "^5.1.5",
+    "@types/react-router-dom": "^5.1.7",
     "firebase": "^7.16.0",
     "node-2fa": "^1.1.2",
     "node-sass": "^4.14.1",
